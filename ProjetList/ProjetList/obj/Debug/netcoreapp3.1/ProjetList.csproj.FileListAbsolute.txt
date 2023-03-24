@@ -1,0 +1,14 @@
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.csproj.AssemblyReference.cache
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.AssemblyInfoInputs.cache
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.AssemblyInfo.cs
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.csproj.CoreCompileInputs.cache
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.exe
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.deps.json
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.runtimeconfig.json
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.runtimeconfig.dev.json
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.dll
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.pdb
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.dll
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.pdb
+C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.genruntimeconfig.cache
