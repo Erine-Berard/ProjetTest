@@ -116,9 +116,11 @@ namespace ProjetList
                                                     {
                                                         Console.WriteLine("Votre choix : ");
                                                         string choixCaddieString = Console.ReadLine();
-
+                                                        
                                                         if (!int.TryParse(choixCaddieString, out choixCaddie) || choixCaddie <= 0 || choixCaddie > 4)
                                                             throw new Exception("\nChoix invalide");
+                                                        else
+                                                            Console.Clear();
                                                     }
                                                     catch(Exception e)
                                                     {
@@ -130,6 +132,7 @@ namespace ProjetList
                                                 {
                                                     case 1:
                                                         liste.AfficherProduitCaddie();
+                                                        
                                                         break;
                                                     case 2:
                                                         liste.AjouterProduitCaddie();
@@ -139,9 +142,9 @@ namespace ProjetList
                                                         break;
                                                     case 4:
                                                         play2 = false;
-                                                        Console.Clear();
                                                         break;
                                                 }
+                                                Console.Clear();
                                             };
                                             break;
                                         case 7:

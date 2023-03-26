@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ProjetList
@@ -66,21 +67,21 @@ namespace ProjetList
             string stringNumero = String.Empty;
             int numero = 0;
             int champQuant = 0;
-            
+
+            int i = 0;
+            Console.WriteLine();
+
+            foreach (var prod in ListeProduit)
+            {
+                i++;
+                Console.Write($"{i} ");
+                prod.Afficher();
+            }
+
             while (numero <= 0)
             {
                 try
                 {
-                    int i = 0;
-                    Console.WriteLine();
-
-                    foreach (var prod in ListeProduit)
-                    {
-                        i++;
-                        Console.Write($"{i} ");
-                        prod.Afficher();
-                    }
-
                     Console.WriteLine("\nVeuillez selectionner un produit à ajouter:");
                     stringNumero = Console.ReadLine();
 
@@ -96,11 +97,8 @@ namespace ProjetList
                             Console.WriteLine($"\nChoississez une quantité pour : {prodToAdd.Nom}");
                             stringChampQuant = Console.ReadLine();
 
-                            if (!int.TryParse(stringChampQuant, out champQuant))
+                            if (!int.TryParse(stringChampQuant, out champQuant) ||champQuant <= 0)
                                 throw new Exception("\n La quantité rentrée est invalide");
-
-                            if (champQuant <= 0)
-                                throw new Exception("\nLa quantité ne peut pas être négative");
                         }
                         catch (Exception e)
                         {
@@ -115,10 +113,18 @@ namespace ProjetList
                     numero = 0;
                 }
             }
-            courseToAdd.Produit = prodToAdd;
-            courseToAdd.Quantite = champQuant;
+            if (ListeCourse.Select(c => c.Produit).ToList().Contains(prodToAdd))
+            {
+                Course course = ListeCourse.Where(co => co.Produit == prodToAdd).First();
+                course.Quantite += champQuant;
+            }
+            else
+            {
+                courseToAdd.Produit = prodToAdd;
+                courseToAdd.Quantite = champQuant;
 
-            ListeCourse.Add(courseToAdd);
+                ListeCourse.Add(courseToAdd);
+            }
             Console.WriteLine($"\n{champQuant} {prodToAdd.Nom}(s) ajouté(s) à votre liste de courses !");
             Clear();
         }
@@ -296,64 +302,74 @@ namespace ProjetList
 
         public void AjouterProduitCaddie()
         {
-            string stringNumero = String.Empty;
-            int numero = 0;
-
-            string stringQuantite = String.Empty;
-            int quantite = 0;
-
-            Course courToAdd = new Course();
-
-            int i = 0;
-            foreach (var crs in ListeCourse)
+            try
             {
-                i++;
-                Console.Write($"{i} ");
-                crs.Afficher();
-            }
+                if (ListeCourse.Count == 0)
+                    throw new Exception("Votre liste de course est vide.");
 
-            while (numero <= 0)
+                string stringNumero = String.Empty;
+                int numero = 0;
+
+                string stringQuantite = String.Empty;
+                int quantite = 0;
+
+                Course courToAdd = new Course();
+
+                int i = 0;
+                foreach (var crs in ListeCourse)
+                {
+                    i++;
+                    Console.Write($"{i} ");
+                    crs.Afficher();
+                }
+
+                while (numero <= 0)
+                {
+                    try
+                    {
+                        Console.WriteLine("\nVeuillez selectionner un produit à ajouter:");
+                        stringNumero = Console.ReadLine();
+
+                        if (!int.TryParse(stringNumero, out numero) || numero <= 0 || numero > ListeCourse.Count)
+                            throw new Exception("\nLe numéro de produit rentré est invalide");
+
+                        courToAdd = ListeCourse[numero - 1];
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        numero = 0;
+                    }
+                }
+
+                while (quantite <= 0)
+                {
+                    try
+                    {
+                        Console.WriteLine($"\nChoississez une quantité pour : {courToAdd.Produit.Nom}");
+                        stringQuantite = Console.ReadLine();
+                        if (!int.TryParse(stringQuantite, out quantite))
+                            throw new Exception("\n La quantité rentrée est invalide");
+
+                        if (quantite <= 0)
+                            throw new Exception("\nLa quantité ne peut pas être négative");
+
+                        courToAdd.QuantitePrise = quantite;
+
+                        Console.WriteLine($"\n{quantite} {courToAdd.Produit.Nom}(s) ajouté(s) à votre caddie !");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        quantite = 0;
+                    }
+                }
+            }
+            catch (Exception e)
             {
-                try
-                {
-                    Console.WriteLine("\nVeuillez selectionner un produit à ajouter:");
-                    stringNumero = Console.ReadLine();
-
-                    if (!int.TryParse(stringNumero, out numero) || numero <= 0 || numero > ListeCourse.Count)
-                        throw new Exception("\nLe numéro de produit rentré est invalide");
-
-                    courToAdd = ListeCourse[numero - 1];
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    numero = 0;
-                }
+                Console.WriteLine(e.Message);
             }
-
-            while (quantite <= 0)
-            {
-                try
-                {
-                    Console.WriteLine($"\nChoississez une quantité pour : {courToAdd.Produit.Nom}");
-                    stringQuantite = Console.ReadLine();
-                    if (!int.TryParse(stringQuantite, out quantite))
-                        throw new Exception("\n La quantité rentrée est invalide");
-
-                    if (quantite <= 0)
-                        throw new Exception("\nLa quantité ne peut pas être négative");
-
-                    courToAdd.QuantitePrise = quantite;
-
-                    Console.WriteLine($"\n{quantite} {courToAdd.Produit.Nom}(s) ajouté(s) à votre caddie !");
-                    Clear();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    quantite = 0;
-                }
-            }
+            Clear();
         }
 
         public void SupprimerProduitCaddie()
@@ -364,7 +380,7 @@ namespace ProjetList
             try
             {
                 if (Caddie.Count == 0)
-                    throw new Exception("\nVotre caddie est vide.");
+                    throw new Exception("Votre caddie est vide.");
 
                 Console.WriteLine("\nVoici votre caddie actuel : ");
                 int i = 0;
