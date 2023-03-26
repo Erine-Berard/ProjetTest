@@ -18,6 +18,14 @@ namespace ProjetList
             this.caddie = new List<Course>();
         }
 
+        private void Clear()
+        {
+            Console.WriteLine("Appuyer sur entrer pour retourner au menu :");
+            Console.ReadLine();
+            Console.Clear();
+            return;
+        }
+
         public void AfficherListeCourse()
         {
             if (this.listeCourse.Count == 0)
@@ -29,12 +37,11 @@ namespace ProjetList
                 Console.WriteLine("Liste des courses :");
                 for (int i = 0; i < this.listeCourse.Count; i++)
                 {
+                    Console.WriteLine("----- Produit n°" + (i++) + " -----");
                     this.listeCourse[i].Afficher();
                 }
             }
-            Console.WriteLine("Appuyer sur entrer pour retourner au menu :");
-            Console.ReadLine();
-            Console.Clear();
+            Clear();
             return;
         }
 
@@ -146,19 +153,52 @@ namespace ProjetList
                 {
                     if (this.listeCourse[i].quantitePrise < this.listeCourse[i].quantite)
                     {
+                        Console.WriteLine("----- Produit n°" + (i++) + " -----");
                         this.listeCourse[i].Afficher();
                     }
                 }
             }
-            Console.WriteLine("Appuyer sur entrer pour retourner au menu :");
-            Console.ReadLine();
-            Console.Clear();
+            Clear();
             return;
         }
 
         public void ModifierProduit()
         {
+            if (this.listeCourse.Count == 0)
+            {
+                Console.WriteLine("Vous n'avez aucun produit dans votre liste");
+            }
+            else
+            {
+                Console.WriteLine("Liste des produits :");
+                for (int i = 0; i < this.listeCourse.Count; i++)
+                {
+                    Console.WriteLine("----- Produit n°" + (i++) + " -----");
+                    this.listeCourse[i].Afficher();
+                }
 
+                Console.WriteLine("Entrez le numéro du produit que vous voulez modifier :");
+                string choixString = Console.ReadLine();
+                Console.Clear();
+
+                try
+                {
+                    int choix = 0;
+                    if (int.TryParse(choixString, out choix))
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception("Votre choix doit être un nombre\n\n");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    ModifierProduit();
+                }
+            }
             return;
         }
 
