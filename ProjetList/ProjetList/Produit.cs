@@ -7,21 +7,20 @@ namespace ProjetList
 {
     class Produit
     {
-        public string nom { get; set; }
-        public decimal prix { get; set; }
+        public string Nom { get; set; }
+        public decimal Prix { get; set; }
 
         public Produit() { }
         public Produit(string nom, decimal prix)
         {
-            this.nom = nom;
-            this.prix = prix;
+            Nom = nom;
+            Prix = prix;
         }
 
         public void Afficher()
         {
-            Console.WriteLine("- " + nom + " : ");
-            Console.WriteLine("    - Prix : " + prix + "€");
-            return;
+            Console.WriteLine($"- {Nom} : ");
+            Console.WriteLine($"    - Prix : {Prix} €");
         }
 
 

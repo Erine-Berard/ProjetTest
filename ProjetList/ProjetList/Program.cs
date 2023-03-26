@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ProjetList
@@ -8,6 +9,8 @@ namespace ProjetList
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
             // Creation des produits 
             List<string> noms = new List<string> { "lait", "oeuf", "yaourt", "eau", "fromage", "pomme", "fraise", "jambon", "salade" };
             List<decimal> prix = new List<decimal> { 0.53m, 5.85m, 4.40m, 0.18m, 5m, 0.54m, 2.49m, 2.20m, 1.29m };
@@ -19,7 +22,7 @@ namespace ProjetList
                 try
                 {
                     Produit produit = new Produit(noms[i], prix[i]);
-                    if (produit.nom != null && produit.prix != 0)
+                    if (produit.Nom != null && produit.Prix != 0)
                     {
 
                         listeProduit.Add(produit);
@@ -47,34 +50,35 @@ namespace ProjetList
             try
             {
                 Liste liste = new Liste(listeProduit);
-                if (liste.listeProduit != listeProduit)
-                {
-                     throw new Exception("La liste de produit n'a pas été ajouter à notre instance liste");
-                }
+                if (liste.ListeProduit != listeProduit)
+                     throw new Exception("La liste de produit n'a pas été ajoutée à notre instance liste");
+
                 else
                 {
                     bool play = true;
                     do
                     {
                         // Menu
-                        Console.WriteLine("Menu :");
+                        Console.WriteLine("------------- Menu genéral -------------\n");
                         Console.WriteLine("1. Afficher la liste de course");
                         Console.WriteLine("2. Afficher les produits manquants");
-                        Console.WriteLine("3. Ajouter un produit à notre liste ");
-                        Console.WriteLine("4. Modifier un produit");
-                        Console.WriteLine("5. Gestion du caddie");
-                        Console.WriteLine("6. Quitter");
+                        Console.WriteLine("3. Ajouter un produit à votre liste ");
+                        Console.WriteLine("4. Modifier un produit dans votre liste");
+                        Console.WriteLine("5. Supprimer un produit de votre liste");
+                        Console.WriteLine("6. Gestion du caddie");
+                        Console.WriteLine("7. Quitter\n");
 
+                        int choix = 0;
                         try
                         {
                             Console.WriteLine("Votre choix : ");
                             string choixString = Console.ReadLine();
-                            int choix = 0;
+                            
                             Console.Clear();
 
                             if (int.TryParse(choixString, out choix))
                             {
-                                if (choix != 0 && choix < 7)
+                                if (choix != 0 && choix < 8)
                                 {
                                     switch (choix)
                                     {
@@ -91,69 +95,68 @@ namespace ProjetList
                                             liste.ModifierProduit();
                                             break;
                                         case 5:
+                                            liste.SupprimerProduitListeCourse();
+                                            break;
+                                        case 6:
+                                            Console.Clear();
                                             bool play2 = true;
-                                            do
+                                            while(play2)
                                             {
-                                                Console.WriteLine("Menu caddie :");
+                                                Console.WriteLine("------------- Votre caddie -------------\n");
                                                 Console.WriteLine("1. Afficher le caddie");
                                                 Console.WriteLine("2. Ajouter un produit");
                                                 Console.WriteLine("3. Supprimer un produit");
-                                                Console.WriteLine("4. Quitter");
-                                                try
+                                                Console.WriteLine("4. Quitter\n");
+
+                                                int choixCaddie = 0;
+
+                                                while (choixCaddie <= 0)
                                                 {
-                                                    Console.WriteLine("Votre choix : ");
-                                                    string choixCaddieString = Console.ReadLine();
-                                                    int choixCaddi = 0; 
-                                                    if (int.TryParse(choixString, out choix))
+                                                    try
                                                     {
-                                                        if (choixCaddi != 0 && choix < 5)
-                                                        {
-                                                            switch (choixCaddi)
-                                                            {
-                                                                case 1:
-                                                                    liste.AfficherProduitCaddie();
-                                                                    break;
-                                                                case 2:
-                                                                    liste.AjouterProduitCaddie();
-                                                                    break;
-                                                                case 3:
-                                                                    liste.SupprimerProduitCaddie();
-                                                                    break;
-                                                                case 4:
-                                                                    play2 = false;
-                                                                    break;
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            throw new Exception("Votre choix n'est pas dans le menu ");
-                                                        }
+                                                        Console.WriteLine("Votre choix : ");
+                                                        string choixCaddieString = Console.ReadLine();
+
+                                                        if (!int.TryParse(choixCaddieString, out choixCaddie) || choixCaddie <= 0 || choixCaddie > 4)
+                                                            throw new Exception("\nChoix invalide");
                                                     }
-                                                    else
+                                                    catch(Exception e)
                                                     {
-                                                        throw new Exception("Votre choix doit être un nombre");
+                                                        Console.WriteLine(e.Message);
                                                     }
                                                 }
-                                                catch (Exception e)
+
+                                                switch (choixCaddie)
                                                 {
-                                                    Console.WriteLine(e.Message);
+                                                    case 1:
+                                                        liste.AfficherProduitCaddie();
+                                                        break;
+                                                    case 2:
+                                                        liste.AjouterProduitCaddie();
+                                                        break;
+                                                    case 3:
+                                                        liste.SupprimerProduitCaddie();
+                                                        break;
+                                                    case 4:
+                                                        play2 = false;
+                                                        Console.Clear();
+                                                        break;
                                                 }
-                                            } while (play2 == true);
+                                            };
                                             break;
-                                        case 6:
+                                        case 7:
                                             play = false;
                                             break;
                                     }
-
                                 }
                                 else
                                 {
-                                    throw new Exception("Votre choix n'est pas dans le menu ");
+                                    throw new Exception("\nVotre choix n'est pas dans le menu ");
                                 }
                             }
                             else
                             {
-                                throw new Exception("Votre choix doit être un nombre");
+                                throw new Exception("\nVotre choix doit être un nombre");
                             }
                         }
                         catch (Exception e)

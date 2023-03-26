@@ -12,3 +12,17 @@ C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\bin\Debug\netcoreap
 C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.dll
 C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.pdb
 C:\Users\Erine\Documents\Cours\B3\Test\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.genruntimeconfig.cache
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.exe
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.deps.json
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.runtimeconfig.json
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.runtimeconfig.dev.json
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.dll
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\bin\Debug\netcoreapp3.1\ProjetList.pdb
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.csproj.AssemblyReference.cache
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.GeneratedMSBuildEditorConfig.editorconfig
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.AssemblyInfoInputs.cache
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.AssemblyInfo.cs
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.csproj.CoreCompileInputs.cache
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.dll
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.pdb
+C:\Duncan\EPSI\Tests_Indus\Projet_Courses\ProjetList\ProjetList\obj\Debug\netcoreapp3.1\ProjetList.genruntimeconfig.cache

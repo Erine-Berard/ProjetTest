@@ -6,226 +6,404 @@ namespace ProjetList
 {
     class Liste
     {
-        public List<Course> listeCourse { get; set; }
-        public List<Course> caddie { get; set; }
-        public List<Produit> listeProduit { get; set; }
+        public List<Course> ListeCourse { get; set; }
+        public List<Course> Caddie { 
+            get {
+                var caddie = new List<Course>();
+
+                foreach (var crs in ListeCourse)
+                    if (crs.QuantitePrise > 0)
+                        caddie.Add(crs);
+
+                return caddie;
+            }
+        }
+        public List<Produit> ListeProduit { get; set; }
 
         public Liste() { }
         public Liste(List<Produit> listeProduit)
         {
-            this.listeProduit = listeProduit;
-            this.listeCourse = new List<Course>();
-            this.caddie = new List<Course>();
+            ListeProduit = listeProduit;
+            ListeCourse = new List<Course>();
         }
 
         private void Clear()
         {
-            Console.WriteLine("Appuyer sur entrer pour retourner au menu :");
+            Console.WriteLine("Appuyer sur une \"Entrer\" pour retourner au menu :");
             Console.ReadLine();
             Console.Clear();
-            return;
         }
 
         public void AfficherListeCourse()
         {
-            if (this.listeCourse.Count == 0)
+            try
             {
-                Console.WriteLine("Vous n'avez aucun produit dans votre liste");
-            }
-            else
-            {
-                Console.WriteLine("Liste des courses :");
-                for (int i = 0; i < this.listeCourse.Count; i++)
+                if (ListeCourse.Count == 0)
+                    throw new Exception("Votre liste de courses est vide");
+
+                Console.WriteLine("Votre liste de courses :");
+                var i = 0;
+                foreach (var course in ListeCourse)
                 {
-                    Console.WriteLine("----- Produit n°" + (i++) + " -----");
-                    this.listeCourse[i].Afficher();
+                    i++;
+                    Console.Write($"{i} ");
+                    course.Afficher();
                 }
             }
+            catch(Exception e) 
+            {
+                Console.WriteLine(e.Message);
+                
+            }
             Clear();
-            return;
         }
 
         public void AjoutProduitListeCourse()
         {
-            try
+            var courseToAdd = new Course();
+            var prodToAdd = new Produit();
+            string stringChampQuant = String.Empty;
+            string stringNumero = String.Empty;
+            int numero = 0;
+            int champQuant = 0;
+            
+            while (numero <= 0)
             {
-                var courseToAdd = new Course();
-                var prodToAdd = new Produit();
-                string stringChampQuant = String.Empty;
-                string stringNumero = String.Empty;
-                int numero = 0;
-                int champQuant = 0;
-                int i = 0;
-
-                foreach (var prod in listeProduit)
+                try
                 {
-                    i++;
-                    Console.WriteLine($"[{i}] : {prod.nom} - {prod.prix} €");
-                }
+                    int i = 0;
+                    Console.WriteLine();
 
-
-                //Ici on demande à l'utilisateur de remplir les champs
-
-
-                //Vérification du Numéro
-
-                if (!int.TryParse(stringNumero, out numero))
-                {
-                    throw new Exception("Le numéro de produit rentré est invalide");
-                }
-                else
-                {
-                    numero = int.Parse(stringNumero);
-                    prodToAdd = listeProduit[numero - 1];
-
-                    // Verification de la quantité
-                    if (!int.TryParse(stringChampQuant, out champQuant))
-                        throw new Exception("La quantité rentrée est invalide");
-
-                    else
+                    foreach (var prod in ListeProduit)
                     {
-                        champQuant = int.Parse(stringChampQuant);
-
-                        if (champQuant <= 0)
-                            throw new Exception("La quantité ne peut pas être négative");
-
-                        courseToAdd.produit = prodToAdd;
-                        courseToAdd.quantite= champQuant;
-
-                        listeCourse.Add(courseToAdd);
+                        i++;
+                        Console.Write($"{i} ");
+                        prod.Afficher();
                     }
+
+                    Console.WriteLine("\nVeuillez selectionner un produit à ajouter:");
+                    stringNumero = Console.ReadLine();
+
+                    if (!int.TryParse(stringNumero, out numero) || numero <= 0 || numero > ListeProduit.Count)
+                        throw new Exception("\nLe numéro de produit rentré est invalide");
+
+                    prodToAdd = ListeProduit[numero - 1];
+
+                    while (champQuant <= 0)
+                    {
+                        try
+                        {
+                            Console.WriteLine($"\nChoississez une quantité pour : {prodToAdd.Nom}");
+                            stringChampQuant = Console.ReadLine();
+
+                            if (!int.TryParse(stringChampQuant, out champQuant))
+                                throw new Exception("\n La quantité rentrée est invalide");
+
+                            if (champQuant <= 0)
+                                throw new Exception("\nLa quantité ne peut pas être négative");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                            champQuant = 0;
+                        }
+                    };
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    numero = 0;
                 }
             }
-            catch (Exception e)
-            { 
-                Console.WriteLine(e.Message);
-                AjoutProduitListeCourse();
-            }
+            courseToAdd.Produit = prodToAdd;
+            courseToAdd.Quantite = champQuant;
+
+            ListeCourse.Add(courseToAdd);
+            Console.WriteLine($"\n{champQuant} {prodToAdd.Nom}(s) ajouté(s) à votre liste de courses !");
+            Clear();
         }
+
 
         public void SupprimerProduitListeCourse()
         {
+            string stringNumero = String.Empty;
+            int numero = 0;
+            int i = 0;
+
             try
             {
-                string stringNumero = String.Empty;
-                int numero;
-                int i = 0;
+                if (ListeCourse.Count == 0)
+                    throw new Exception("Votre liste de course est vide.");
 
-                foreach (var course in listeCourse)
+                Console.WriteLine("Votre liste de courses :");
+                foreach (var crs in ListeCourse)
                 {
                     i++;
-                    Console.WriteLine($"[{i}] : {course.produit.nom} x {course.quantite} - prix total : {course.totalPrix}");
+                    Console.Write($"{i} ");
+                    crs.Afficher();
                 }
-
-                if (!int.TryParse(stringNumero, out numero))
-                    throw new Exception("Le numéro rentré est invalide");
-
-                else
+                while (numero <= 0)
                 {
-                    numero = int.Parse(stringNumero);
-                    if (listeCourse[numero - 1] == null)
-                        throw new Exception("Le numéro rentré n'est pas compris dans la liste de course");
-
-                    else
+                    try
                     {
-                        var crsToRmv = listeCourse[numero - 1];
-                        listeCourse.Remove(crsToRmv);
-                    }
+                        Console.WriteLine("Veuillez sélectionner le produit à supprimer :");
+                        stringNumero = Console.ReadLine();
+                        if (!int.TryParse(stringNumero, out numero) || numero <= 0 || numero > ListeCourse.Count)
+                            throw new Exception("Le numéro rentré est invalide");
 
-                }
+                        ListeCourse.Remove(ListeCourse[numero - 1]);
+                        Console.WriteLine("Produit retiré !");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        numero = 0;
+                    }
+                };
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                SupprimerProduitListeCourse();
             }
+            Clear();
         }
 
         public void AfficherProduitManquant()
         {
-            if (this.listeCourse.Count == 0)
+            try
             {
-                Console.WriteLine("Vous n'avez aucun produit dans votre liste");
-            }
-            else
-            {
-                for (int i = 0; i < this.listeCourse.Count; i++)
+                if (ListeCourse.Count == 0)
+                    throw new Exception("Votre liste de course est vide.");
+
+                if (Caddie == ListeCourse)
+                    Console.WriteLine("On dirait que vous avez tout ce qu'il vous faut !");
+
+                else
                 {
-                    if (this.listeCourse[i].quantitePrise < this.listeCourse[i].quantite)
+                    Console.WriteLine("Voici les produits manquants:");
+                    int i = 0;
+                    foreach (var crs in ListeCourse)
                     {
-                        Console.WriteLine("----- Produit n°" + (i++) + " -----");
-                        this.listeCourse[i].Afficher();
+                        i++;
+                        if (crs.QuantitePrise < crs.Quantite)
+                        {
+                            Console.Write($"{i} ");
+                            ListeCourse[i - 1].Afficher();
+                            Console.WriteLine($"Manque : {-(crs.QuantitePrise - crs.Quantite)}");
+                        }
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             Clear();
-            return;
         }
 
         public void ModifierProduit()
         {
-            if (this.listeCourse.Count == 0)
+            string stringNumero = String.Empty;
+            int numero = 0;
+
+            string stringQuant = String.Empty;
+            int quantite = 0;
+
+            Course prodToMod = new Course();
+
+            try
             {
-                Console.WriteLine("Vous n'avez aucun produit dans votre liste");
-            }
-            else
-            {
+                if (ListeCourse.Count == 0)
+                    throw new Exception("Votre liste de course est vide.");
+
                 Console.WriteLine("Liste des produits :");
-                for (int i = 0; i < this.listeCourse.Count; i++)
+
+                int i = 0;
+                foreach (var crs in ListeCourse)
                 {
-                    Console.WriteLine("----- Produit n°" + (i++) + " -----");
-                    this.listeCourse[i].Afficher();
+                    i++;
+                    Console.Write($"{i} ");
+                    crs.Afficher();
                 }
 
-                Console.WriteLine("Entrez le numéro du produit que vous voulez modifier :");
-                string choixString = Console.ReadLine();
-                Console.Clear();
-
-                try
+                while (numero <= 0)
                 {
-                    int choix = 0;
-                    if (int.TryParse(choixString, out choix))
+                    try
                     {
+                        Console.WriteLine("\nVeuillez selectionner un produit:");
+                        stringNumero = Console.ReadLine();
+                        if (!int.TryParse(stringNumero, out numero) || numero <= 0 || numero > ListeCourse.Count)
+                            throw new Exception("\nLe numéro rentré est invalide");
 
+                        prodToMod = ListeCourse[numero - 1];
+
+                        while (quantite <= 0)
+                        {
+                            try
+                            {
+                                Console.WriteLine("\nEntrez la nouvelle quantité");
+                                stringQuant = Console.ReadLine();
+                                if (!int.TryParse(stringQuant, out quantite) || quantite <= 0)
+                                    throw new Exception("\nLa quantite rentrée est invalide");
+
+                                prodToMod.Quantite = quantite;
+                                Console.WriteLine("Quantité modifiée !");
+                                Clear();
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                                quantite = 0;
+                            }
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        throw new Exception("Votre choix doit être un nombre\n\n");
+                        Console.WriteLine(e.Message);
+                        numero = 0;
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    ModifierProduit();
                 }
             }
-            return;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public void AfficherProduitCaddie()
         {
-            if (caddie.Count <= 0)
+            try
             {
-                Console.WriteLine("Le caddie ne contient aucun article.");
-            }
-            else
-            {
-                foreach (var crs in caddie)
+                if (Caddie.Count == 0)
+                    throw new Exception("Vous n'avez aucun produit dans votre liste");
+
+                Console.WriteLine("Votre liste de courses :");
+                int i = 0;
+                foreach (var crs in Caddie)
                 {
-                    //crs.AfficherProduit();
+                    i++;
+                    Console.Write($"{i} ");
+                    crs.Afficher();
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+            Clear();
         }
 
         public void AjouterProduitCaddie()
         {
-            return;
+            string stringNumero = String.Empty;
+            int numero = 0;
+
+            string stringQuantite = String.Empty;
+            int quantite = 0;
+
+            Course courToAdd = new Course();
+
+            int i = 0;
+            foreach (var crs in ListeCourse)
+            {
+                i++;
+                Console.Write($"{i} ");
+                crs.Afficher();
+            }
+
+            while (numero <= 0)
+            {
+                try
+                {
+                    Console.WriteLine("\nVeuillez selectionner un produit à ajouter:");
+                    stringNumero = Console.ReadLine();
+
+                    if (!int.TryParse(stringNumero, out numero) || numero <= 0 || numero > ListeCourse.Count)
+                        throw new Exception("\nLe numéro de produit rentré est invalide");
+
+                    courToAdd = ListeCourse[numero - 1];
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    numero = 0;
+                }
+            }
+
+            while (quantite <= 0)
+            {
+                try
+                {
+                    Console.WriteLine($"\nChoississez une quantité pour : {courToAdd.Produit.Nom}");
+                    stringQuantite = Console.ReadLine();
+                    if (!int.TryParse(stringQuantite, out quantite))
+                        throw new Exception("\n La quantité rentrée est invalide");
+
+                    if (quantite <= 0)
+                        throw new Exception("\nLa quantité ne peut pas être négative");
+
+                    courToAdd.QuantitePrise = quantite;
+
+                    Console.WriteLine($"\n{quantite} {courToAdd.Produit.Nom}(s) ajouté(s) à votre caddie !");
+                    Clear();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    quantite = 0;
+                }
+            }
         }
 
         public void SupprimerProduitCaddie()
         {
-            return;
-        }
+            string stringNumero = String.Empty;
+            int numero = 0;
 
+            try
+            {
+                if (Caddie.Count == 0)
+                    throw new Exception("\nVotre caddie est vide.");
+
+                Console.WriteLine("\nVoici votre caddie actuel : ");
+                int i = 0;
+                foreach(var prod in Caddie)
+                {
+                    i++;
+                    Console.Write($"{i} ");
+                    prod.Afficher();
+                }
+
+                while (numero <= 0)
+                {
+                    try
+                    {
+                        Console.WriteLine("\nVeuillez sélectionner un acticle à retirer.");
+                        stringNumero = Console.ReadLine();
+
+                        if (!int.TryParse(stringNumero, out numero) || numero <= 0 || numero > Caddie.Count)
+                            throw new Exception("Le numéro entré est invalide");
+
+                        int index = ListeCourse.IndexOf(Caddie[numero - 1]);
+
+                        var artToRmv = ListeCourse[index];
+
+                        artToRmv.QuantitePrise = 0;
+                        Console.WriteLine("Article retiré avec succès !");
+                        Clear();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Clear();
+            }
+        }
     }
 }
