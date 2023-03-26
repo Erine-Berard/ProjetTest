@@ -25,15 +25,14 @@ namespace ProjetList
 
         public void Afficher()
         {
-            string stringChampId;
-            int champId;
-            string stringChampQuant;
-            int champQuant;
-
+            produit.Afficher();
+            Console.WriteLine("    - Quantité : " + quantite);
+            Console.WriteLine("    - Quantité dans votre caddie : " + quantitePrise);
+            Console.WriteLine("    - Prix total : " + totalPrix + "€");
 
 
             // On test l'Id, puis la quantité
-            
+
 
             return; 
         }

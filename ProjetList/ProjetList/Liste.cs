@@ -20,6 +20,21 @@ namespace ProjetList
 
         public void AfficherListeCourse()
         {
+            if (this.listeCourse.Count == 0)
+            {
+                Console.WriteLine("Vous n'avez aucun produit dans votre liste");
+            }
+            else
+            {
+                Console.WriteLine("Liste des courses :");
+                for (int i = 0; i < this.listeCourse.Count; i++)
+                {
+                    this.listeCourse[i].Afficher();
+                }
+            }
+            Console.WriteLine("Appuyer sur entrer pour retourner au menu :");
+            Console.ReadLine();
+            Console.Clear();
             return;
         }
 
@@ -121,7 +136,23 @@ namespace ProjetList
 
         public void AfficherProduitManquant()
         {
-            
+            if (this.listeCourse.Count == 0)
+            {
+                Console.WriteLine("Vous n'avez aucun produit dans votre liste");
+            }
+            else
+            {
+                for (int i = 0; i < this.listeCourse.Count; i++)
+                {
+                    if (this.listeCourse[i].quantitePrise < this.listeCourse[i].quantite)
+                    {
+                        this.listeCourse[i].Afficher();
+                    }
+                }
+            }
+            Console.WriteLine("Appuyer sur entrer pour retourner au menu :");
+            Console.ReadLine();
+            Console.Clear();
             return;
         }
 

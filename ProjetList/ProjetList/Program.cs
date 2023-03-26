@@ -70,6 +70,7 @@ namespace ProjetList
                             Console.WriteLine("Votre choix : ");
                             string choixString = Console.ReadLine();
                             int choix = 0;
+                            Console.Clear();
 
                             if (int.TryParse(choixString, out choix))
                             {

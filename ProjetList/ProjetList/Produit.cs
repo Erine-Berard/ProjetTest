@@ -9,18 +9,18 @@ namespace ProjetList
     {
         public string nom { get; set; }
         public decimal prix { get; set; }
-        public bool estPris { get; set; }
 
         public Produit() { }
         public Produit(string nom, decimal prix)
         {
             this.nom = nom;
             this.prix = prix;
-            this.estPris = false;
         }
 
         public void Afficher()
         {
+            Console.WriteLine("- " + nom + " : ");
+            Console.WriteLine("    - Prix : " + prix + "€");
             return;
         }
 
